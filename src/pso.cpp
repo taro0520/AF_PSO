@@ -3,7 +3,7 @@
 #include <fstream>
 #include <windows.h>
 #include <cmath>
-ofstream filename("result/data.txt");
+ofstream filename_pso("result/data_pso.txt");
 PSO::PSO(int population_size,int dimension,double w,double a1,double a2)
 {
     this->mPopualtion_size=population_size;
@@ -146,9 +146,10 @@ void PSO::Output(vector<vector<double>>solutions)
     for(int i=0;i<this->mPopualtion_size;i++)
     {
         for(int j=0;j<this->mDimension;j++)
-            filename<<solutions[i][j]<<" ";
-        filename<<Compute_Ackley(solutions[i])<<endl;
+            filename_pso<<solutions[i][j]<<" ";
+        filename_pso<<Compute_Ackley(solutions[i])<<endl;
     }
+    filename_pso<<endl<<endl;
 }
 void PSO::run()
 {
@@ -165,7 +166,7 @@ void PSO::run()
 
     while(Evaluation--)
     {
-        Output(solutions);
+        Output(local_best_solution);
         LocalBestUpdate(solutions,local_best_solution,local_best_value);
         GlobalBestUpdate(local_best_solution,local_best_value,global_best_solution,global_best_value);
         NewVelocity(solutions,local_best_solution,global_best_solution,v);
